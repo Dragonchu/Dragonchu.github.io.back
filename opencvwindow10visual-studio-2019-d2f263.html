@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F237f655d-c0ea-4029-a4b0-d5713498eccb%2Flogo.jpg?table=collection&amp;id=2f10fa44-5468-4b53-ba49-a1689fd85227">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>OpenCV的安装与环境配置（window10，Visual Studio 2019）&nbsp;|&nbsp;DragonChuBlog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="OpenCV的安装与环境配置（window10，Visual Studio 2019）">
+  
+    <meta name="description" content="配置OpenCV">
+    <meta property="og:description" content="配置OpenCV">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F237f655d-c0ea-4029-a4b0-d5713498eccb%2Flogo.jpg?table=collection&amp;id=2f10fa44-5468-4b53-ba49-a1689fd85227"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F20ffb213-6db3-49c4-9353-9575fa3380ee%2Flogo.jpg?table=block&amp;id=18526eb4-2b5e-4f5b-a635-8a529b13d808"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">OpenCV的安装与环境配置（window10，Visual Studio 2019）</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Sun, Apr 17, 2022</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--default">
+            <a href="tag/环境配置.html">环境配置</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/d2f2635d477845078b554e717cf6ba43" class="PageRoot"><h1 id="https://www.notion.so/dd31aaa05a054d1ea180b45814e55c2c" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/dd31aaa05a054d1ea180b45814e55c2c"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">OpenCV的安装与环境配置（window10，Visual Studio 2019）</strong></span></span></h1><div id="https://www.notion.so/c89239f8442341cba46021d1bf230620" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">日期：2021年04月17日</span></span></p></div><h2 id="https://www.notion.so/73cfd2f301704f3d9c5c0578ba2e844a" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/73cfd2f301704f3d9c5c0578ba2e844a"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">OpenCV的安装</strong></span></span></h2><div id="https://www.notion.so/39ccd923b2054aaf824e357b99db9f16" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">第一步：</strong></span><span class="SemanticString">下载OpenCv </span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://opencv.org/releases/"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">https://opencv.org/releases/</strong></a></span><span class="SemanticString">，本文使用 OpenCV-4.5.0 。</span></span></p></div><div id="https://www.notion.so/ced0ca28ca414076b0c6fa7660d789ec" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">第二步：</strong></span><span class="SemanticString">下载得到 opencv-4.5.0-vc14_vc15.exe 文件，运行该文件，选择解压到目标地址，本文解压到目录 D:\Library 。</span></span></p></div><div id="https://www.notion.so/77662a8e482743a3a44d4e8918a22cba" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">第三步：</strong></span><span class="SemanticString">为了方便以及清晰，这一步添加系统环境变量 OPENCV_DIR 。方法为以管理员身份运行 cmd ，输入并运行命令</span><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">setx -m OPENCV_DIR D:\Library\opencv\build\x64\vc15</code></span><span class="SemanticString">，（此处根据平台环境可能需要有所调整）。</span></span></p></div><div id="https://www.notion.so/6d78452cad954fb0b393d58e6e9cd5a7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">第四步：</strong></span><span class="SemanticString">添加系统环境变量Path中的环境变量，添加</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">%OPENCV_DIR%\bin</strong></span></span></p></div><h2 id="https://www.notion.so/83ef130dbf454536aa6df81e07316184" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/83ef130dbf454536aa6df81e07316184"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">Visual Studio 2019项目的配置</strong></span></span></h2><ul class="BulletedListWrapper"><li id="https://www.notion.so/70211a3a908646ccabe044b79e2694e9" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">解决方案配置为 Debug ，解决方案平台为 x64 。</span></span></li><li id="https://www.notion.so/7a3ac013bf524bbe9f0d02899e829178" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">项目属性 - VC++ 目录 - 包含目录，添加 D:\Library\opencv\build\include 路径</span></span></li><li id="https://www.notion.so/56d2a1f1ed4e483693aafe31315d5140" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">项目属性 - VC++ 目录 - 库目录，添加 D:\Library\opencv\build\x64\vc15\lib 路径</span></span></li><li id="https://www.notion.so/bb2e100939f846688ae4bfa430a11514" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">项目属性 - 链接器 - 输入 - 附加依赖项，添加 opencv_world450d.lib ，（此处lib文件可在 D:\Library\opencv\build\x64\vc15\bin 中查看，d表示debug，解决方案与平台需要根据实际情况做调整）</span></span></li></ul><h2 id="https://www.notion.so/2478c63f4f1a48ea8adf645163481d21" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/2478c63f4f1a48ea8adf645163481d21"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">测试程序</strong></span></span></h2><pre id="https://www.notion.so/2a63373bb65c4aec94655983ee84a9e9" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>#include &lt;iostream&gt;
+#include &lt;stdio.h&gt;
+#include &quot;opencv2/highgui/highgui.hpp&quot;
+#include &quot;opencv2/imgproc/imgproc.hpp&quot;
+using namespace std;
+using namespace cv;
+
+int main()
+{
+  // 设置窗口
+  Mat img = Mat::zeros(Size(800, 600), CV_8UC3);
+
+  img.setTo(255);              // 设置屏幕为白色
+  Point p1(100, 100);          // 点p1
+  Point p2(758, 50);           // 点p2
+
+  // 画直线函数
+  line(img, p1, p2, Scalar(0, 0, 255), 2);   // 红色
+  line(img, Point(300, 300), Point(758, 400), Scalar(0, 255, 255), 3);
+
+  Point p(20, 20);//初始化点坐标为(20,20)
+  circle(img, p, 1, Scalar(0, 255, 0), -1);  // 画半径为1的圆(画点）
+
+  Point p4;
+  p4.x = 300;
+  p4.y = 300;
+  circle(img, p4, 100, Scalar(120, 120, 120), -1);
+
+  int thickness = 3;
+  int lineType = 8;
+  double angle = 30;  //椭圆旋转角度
+  ellipse(img, Point(100, 100), Size(90, 60), angle, 0, 360, Scalar(255, 255, 0), thickness, lineType);
+
+
+  // 画矩形
+  Rect r(250, 250, 120, 200);
+  rectangle(img, r, Scalar(0, 255, 255), 3);
+
+  imshow(&quot;画板&quot;, img);
+  waitKey();
+  return 0;
+}</span></span></span></code></pre></article>
+  <footer class="Footer">
+  <div>&copy; DragonChuBlog 2022</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>

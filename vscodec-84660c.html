@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F237f655d-c0ea-4029-a4b0-d5713498eccb%2Flogo.jpg?table=collection&amp;id=2f10fa44-5468-4b53-ba49-a1689fd85227">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>使用vscode调试c&nbsp;|&nbsp;DragonChuBlog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="使用vscode调试c">
+  
+    <meta name="description" content="人生苦短，少敲命令行。">
+    <meta property="og:description" content="人生苦短，少敲命令行。">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F237f655d-c0ea-4029-a4b0-d5713498eccb%2Flogo.jpg?table=collection&amp;id=2f10fa44-5468-4b53-ba49-a1689fd85227"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F20ffb213-6db3-49c4-9353-9575fa3380ee%2Flogo.jpg?table=block&amp;id=18526eb4-2b5e-4f5b-a635-8a529b13d808"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">使用vscode调试c</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Wed, Sep 28, 2022</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--default">
+            <a href="tag/环境配置.html">环境配置</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--default">
+            <a href="tag/C语言.html">C语言</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/84660c88da2549978ba670d083ed8793" class="PageRoot"><div id="https://www.notion.so/4194e710c971497ea49762c42dbbf7c6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在vscode下创建tasks.json文件，该文件会被vscode用来执行生成可执行文件的操作。</span></span></p></div><pre id="https://www.notion.so/d4645b087e534b23b3be5a3a4326b79a" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>{
+  &quot;version&quot;: &quot;2.0.0&quot;,
+  &quot;tasks&quot;: [
+    {
+      &quot;label&quot;: &quot;build c&quot;,
+      &quot;type&quot;: &quot;shell&quot;,
+      &quot;command&quot;: &quot;cc&quot;,
+      &quot;args&quot;: [
+        &quot;-std=c99&quot;,
+        &quot;-Wall&quot;,
+        &quot;-ledit&quot;,
+        &quot;-lm&quot;,
+        &quot;-g&quot;,
+        &quot;${workspaceFolder}/**.c&quot;,
+        &quot;-o&quot;,
+        &quot;${workspaceFolder}/${fileBasenameNoExtension}.out&quot;
+      ],
+      &quot;group&quot;: &quot;build&quot;
+    },
+  ]
+}</span></span></span></code></pre><div id="https://www.notion.so/4f856a6937f6433a9b779012b07e5dcb" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Command 和 args 是主要的参数，如何生成可执行文件就如何编写。</span></span></p></div><div id="https://www.notion.so/77ee82495bf9435aa7b759e8165dc9ca" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">${workspaceFolder}表示工作目录</code></span></span></p></div><div id="https://www.notion.so/28aeb62faf624466a82532a0000a20fd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><code class="SemanticString__Fragment SemanticString__Fragment--Code">${fileBasenameNoExtension}如其名表示去掉后缀的文件名</code></span></span></p></div><div id="https://www.notion.so/cbe7cc5251ce4bf29f540735b40f0e0e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">创建launch.json文件，该文件会被vscode用来执行debug操作。</span></span></p></div><pre id="https://www.notion.so/b831526f7d61432ba76501205806df6c" class="Code"><code><span class="SemanticStringArray"><span class="SemanticString"><span>{
+  &quot;version&quot;: &quot;0.2.0&quot;,
+  &quot;configurations&quot;: [
+    {
+      &quot;preLaunchTask&quot;: &quot;build c&quot;,
+      &quot;name&quot;: &quot;Launch C&quot;,
+      &quot;type&quot;: &quot;cppdbg&quot;,
+      &quot;request&quot;: &quot;launch&quot;,
+      &quot;program&quot;: &quot;${workspaceFolder}/${fileBasenameNoExtension}.out&quot;,
+      &quot;args&quot;: [],
+      &quot;stopAtEntry&quot;: false,
+      &quot;cwd&quot;: &quot;${workspaceFolder}&quot;,
+      &quot;environment&quot;: [],
+      &quot;externalConsole&quot;: true,
+      &quot;MIMode&quot;: &quot;lldb&quot;,
+    }
+  ]
+}</span></span></span></code></pre><div id="https://www.notion.so/3ba071444c0844cf8d93a2ef2d457557" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">preLaunchTask填写生成调试文件的task的label。</span></span></p></div><div id="https://www.notion.so/4c4bc4e5dc274dd2a2f97d0448aefa7a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">两个文件设置完之后，在vscode侧边栏的run and debug窗口中就可以进行调试。</span></span></p></div><div id="https://www.notion.so/f5c6d18a6cfd4c3f98ef7c0f12b828d3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">更多参数以及使用详见</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://code.visualstudio.com/docs/editor/debugging#_launch-configurations">https://code.visualstudio.com/docs/editor/debugging#_launch-configurations</a></span></span></p></div></article>
+  <footer class="Footer">
+  <div>&copy; DragonChuBlog 2022</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
