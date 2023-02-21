@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>HadoopMapReduce代码分析GrepExample&nbsp;|&nbsp;DragonChuBlog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="HadoopMapReduce代码分析GrepExample">
+  
+    <meta name="description" content="调试并分析单机grep测试">
+    <meta property="og:description" content="调试并分析单机grep测试">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="archive.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>Archive</span>
+        </div>
+      </a>
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="-c97f76.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📖&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>文章</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">HadoopMapReduce代码分析GrepExample</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, Feb 21, 2023</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+            <a href="tag/Hadoop.html">Hadoop</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/b6bd6d7d2a7944dd908f228ce2d99660" class="PageRoot"><div id="https://www.notion.so/48d5099f3a0948c3b852ee945b64da3b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Grep程序在谷歌的MapReduce论文中也作为示例程序提到过，在大规模数据集中并行找出符合指定模式的文件。</span></span></p></div><div id="https://www.notion.so/9f719096baaa4e67abb519372995762f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html">https://hadoop.apache.org/docs/stable/hadoop-project-dist/hadoop-common/SingleCluster.html</a></span></span></p></div><div id="https://www.notion.so/124fe092c86f4730a737e2a79d1c5731" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">按照官方指南，只需要在hadoop安装目录下用hadoop程序就可以作为单机来跑hadoop</span></span></p></div><div id="https://www.notion.so/e42a13fbf8244aac993a5f76dff3c5a3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">按照官方的指南，跑一个简单的grep程序，</span></span></p></div><pre id="https://www.notion.so/848bc43e1ea34643a236393b96694fc7" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>$ <span class="token function">mkdir</span> input
+$ <span class="token function">cp</span> etc/hadoop/*.xml input
+$ bin/hadoop jar share/hadoop/mapreduce/hadoop-mapreduce-examples-3.3.4.jar <span class="token function">grep</span> input output <span class="token string">'dfs[a-z.]+'</span>
+$ <span class="token function">cat</span> output/*</span></span></span></code></pre><div id="https://www.notion.so/9de46046e456465fb963927e4e704338" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">启动jvm的调试功能，只需要在hadoop-env.sh中添加</span></span></p></div><pre id="https://www.notion.so/53644f3cf3aa4456a02f09bf44fd3f75" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token builtin class-name">export</span> <span class="token assign-left variable">HADOOP_OPTS</span><span class="token operator">=</span><span class="token string">"-agentlib:jdwp=transport=dt_socket,server=y,suspend=y,address=5005"</span></span></span></span></code></pre><div id="https://www.notion.so/71a539c075154a5cb33ee00bedaef31d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">（这部分是jvm调试相关）</span></span></p></div><div id="https://www.notion.so/7d7c2551725b4175b36d718e617b2c5a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在idea中打上断点，通过查看haoop-mapreduce-examples模块中的pom文件，可以看到在打包插件里指定了org.apache.hadoop.examples.ExampleDriver类为启动类。</span></span></p></div><div id="https://www.notion.so/c7642f61cd8c49119320faf800a7c84d" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5b7c7f2b-ce77-4b37-a8b8-34cf0f5895fa%2FUntitled.png?width=617&amp;table=block&amp;id=c7642f61-cd8c-4911-9320-faf800a7c84d"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5b7c7f2b-ce77-4b37-a8b8-34cf0f5895fa%2FUntitled.png?width=617&amp;table=block&amp;id=c7642f61-cd8c-4911-9320-faf800a7c84d" style="width:617px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/c9fdc45c19574600805dec6c531e3e51" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">那么就从这个类开始分析吧。</span></span></p></div><div id="https://www.notion.so/286434d41f8949dd8d1b6f983e6eb583" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/93582acf888d467daa523711bdc4316b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ExampleDriver这个类是用来将各种测试类注册进去并加上一些文字性描述，能看到自带了很多实例程序，我这次分析的是grep程序，对应注册的是Grep类。</span></span></p></div><div id="https://www.notion.so/3c0193496bf94e6a8b50c9b25e6a3622" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/33bf472fdbf742ffbd67b42915b43459" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">ExampleDrive类中使用ProgramDriver类，这个ProgramDriver中使用一个map保存测试类和他们对应的名字关系，而测试类在ProgramDriver中被解析成ProgramDescription，ProgramDescription中保存了测试类的main方法和描述，然后测试时，比如我们的grep程序，先用grep这个名字找到对应的ProgramDescription然后直接调用main方法把命令行中的剩余参数传入。</span></span></p></div><div id="https://www.notion.so/8662186b167a4c0b89e5f5ba9bd8e28c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/4ef141afe5444a068efd97a8ea334f68" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">接下来看一下Grep中的main方法</span></span></p></div><div id="https://www.notion.so/a6df5bcb10ef49ea9cfa483ee87ce1fd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">main方法中用了一个ToolRunner去run，run方法中提供了Configuration类，Grep类，和参数，能猜到应该是使用了默认的配置项去调用Grep，能看到这里的核心是一个Tool接口，Grep继承了Tool接口，ToolRunner会运行Tool。</span></span></p></div><div id="https://www.notion.so/c819b6aff816496e93609b4f306c8f31" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">根据javadoc看看Tool是什么</span></span></p></div><div id="https://www.notion.so/e42e930d4593403ba794a1ad597ae6d0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">看样子hadoop为了方便测试写的一个接口，把一些环境的初始化配置隐藏起来了。</span></span></p></div><div id="https://www.notion.so/0e1eefc6f5d2451eb0c17b85b82620c6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/a38f071463784c39bde32456c6ed44e9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">那来看看Configuration是什么，这个应该是核心类</span></span></p></div><div id="https://www.notion.so/fcd58b21ae644a34a012289e3d12d3ee" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这个Configuration就负责加载core-site那些配置文件已经用户程序中设定的配置，具体的配置目前应该没必要深究。可以看到使用默认配置是将loadDefault这个bool值设为false，然后往一个WeakHashMap中put一个key为自己，value为null的键值对。</span></span></p></div><div id="https://www.notion.so/c2a91fca81ba44b892e32625d67a5b68" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F97384efa-b8ba-4afe-ad48-f41856b7fdd0%2FUntitled.png?width=678&amp;table=block&amp;id=c2a91fca-81ba-44b8-92e3-2625d67a5b68"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F97384efa-b8ba-4afe-ad48-f41856b7fdd0%2FUntitled.png?width=678&amp;table=block&amp;id=c2a91fca-81ba-44b8-92e3-2625d67a5b68" style="width:678px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/cdcf913a57734fe393360330c90bb075" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">第一次看到WeakHashMap，学一下。</span></span></p></div><div id="https://www.notion.so/b1b2bfce014246a0bb2f040d818009ea" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://web.archive.org/web/20061130103858/http://weblogs.java.net/blog/enicholas/archive/2006/05/understanding_w.html">https://web.archive.org/web/20061130103858/http://weblogs.java.net/blog/enicholas/archive/2006/05/understanding_w.html</a></span></span></p></div><div id="https://www.notion.so/dbf6ba78007847fcaa71842cc2a201de" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这里使用的原因，应该是为了没有地方继续使用Configuration时可以让垃圾回收机自动回收这个entry，Configuration应该是一个比较大的对象。有几个问题，第一，什么时候Configuration会不再有对象引用呢？第二，这里的map中会存放哪些Configuration呢？第三，是通过把各种不同路径的C configuration都存在这里然后只用其中的部分，剩下的部分如果一直不使用就让垃圾回收器回收吗？</span></span></p></div><div id="https://www.notion.so/e464976c498d4cda9d5477b147e5f7f0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/c0dfba6eae2a4e0b8426e4755acc395c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">现在可以进入ToolRunner方法中去看了</span></span></p></div><div id="https://www.notion.so/73c057c778bd464381f9ef977bcdeb9f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">一上来就是CallerContext.getCurrent()，经常看到一些这种getCurrent的操作，今天仔细盘一下。</span></span></p></div><div id="https://www.notion.so/38e47452faac4f24bdfdb93cadd712be" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">进去之后调用的是CurrentCallerContextHolder.CALLER_CONTEXT.get()</span></span></p></div><div id="https://www.notion.so/3f6f3d714b5f4a38bc6bddfd6bd04ffa" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa903fc6c-ec16-4ed4-b003-216c61b8c820%2FUntitled.png?width=678&amp;table=block&amp;id=3f6f3d71-4b5f-4a38-bc6b-ddfd6bd04ffa"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fa903fc6c-ec16-4ed4-b003-216c61b8c820%2FUntitled.png?width=678&amp;table=block&amp;id=3f6f3d71-4b5f-4a38-bc6b-ddfd6bd04ffa" style="width:678px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/c873707fb66a4d0f9476244ce205013a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">类描述里贴心的给了链接</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom">https://en.wikipedia.org/wiki/Initialization-on-demand_holder_idiom</a></span></span></p></div><div id="https://www.notion.so/749461de4b354bac8f574af53d7a4678" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">学一下，原来这就是线程安全的单例的使用案例，利用jvm初始化类的特性。</span></span></p></div><div id="https://www.notion.so/84e001a0571b48f1ad5c1d96e1aa17d0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">不过这个单例有点变种，返回的是ThreadLocal变量，这部分内容我还是有点生疏。</span></span></p></div><div id="https://www.notion.so/baf5287d08104f4b9cd55a5017f2d702" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">学习一下ThreadLocal</span></span></p></div><div id="https://www.notion.so/dc66327bde104671a1ba416e8327392b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+  <script src="https://utteranc.es/client.js"
+        repo="Dragonchu/Dragonchu.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+  <footer class="Footer">
+  <div>&copy; DragonChuBlog 2022</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
