@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>Mysql主从复制安装&nbsp;|&nbsp;DragonChuBlog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="Mysql主从复制安装">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>Home</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>About</span>
+        </div>
+      </a>
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="todo.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📌&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>TODO</span>
+        </div>
+      </a>
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="archive.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📓&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>Archive</span>
+        </div>
+      </a>
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="-c97f76.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📖&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>文章</span>
+        </div>
+      </a>
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="-f4018e.html">
+        <div class="Navbar__Btn">
+          
+          <span>我的诗与短句</span>
+        </div>
+      </a>
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">Mysql主从复制安装</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, Mar 21, 2023</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--default">
+            <a href="tag/Mysql.html">Mysql</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/0edb3a02636549ac881da2268c685685" class="PageRoot"><div id="https://www.notion.so/780319737663414d893976ebc6bb90ed" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">阅读前了解一下mariadb与mysql的关系</span></span></p></div><h2 id="https://www.notion.so/48d116918a0e431db3ceb964d95e0ac9" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/48d116918a0e431db3ceb964d95e0ac9"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">centos7使用二进制包安装mysql</span></span></h2><pre id="https://www.notion.so/633fdf1184bb485686ce5b14c3407ed8" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>sudo groupadd mysql
+
+sudo useradd -r -g mysql -s /bin/false mysql
+
+cd /usr/local
+
+sudo tar zxvf /path/to/mysql-VERSION-OS.tar.gz
+
+sudo ln -s full-path-to-mysql-VERSION-OS mysql # 如果要删除软链接使用unlink mysql
+
+cd mysql
+
+sudo chown mysql:mysql -R /usr/local/mysql
+
+sudo chmod 755 /usr/local/mysql/</span></span></span></code></pre><h3 id="https://www.notion.so/a3dd3bd40ea24959bb6e0390553e1753" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/a3dd3bd40ea24959bb6e0390553e1753"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">修改/etc/my.cnf配置</span></span></h3><pre id="https://www.notion.so/640e6ca7fb9e410f9df648de3a5d81ec" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>[mysqld]
+
+bind-address=0.0.0.0
+
+port=3306
+
+user=mysql
+
+basedir=/usr/local/mysql
+
+datadir=/usr/local/mysql/data
+
+socket=/tmp/mysql.sock
+
+log-error=/usr/local/mysql/data/mysql.err
+
+pid-file=/usr/local/mysql/data/mysql.pid
+
+#character config
+
+#
+
+character_set_server=utf8mb4
+
+#
+
+symbolic-links=0
+
+#
+
+#explicit_defaults_for_timestamp=true
+
+#
+
+#
+
+# Settings user and group are ignored when systemd is used.
+
+# If you need to run mysqld under a different user or group,
+
+# customize your systemd unit file for mariadb according to the
+
+# instructions in
+
+[http://fedoraproject.org/wiki/Systemd](http://fedoraproject.org/wiki/Systemd)
+
+[mysqld_safe]
+
+#start mysql service error log
+
+log-error=/var/log/mariadb/mariadb.log
+
+pid-file=/var/run/mariadb/mariadb.pid</span></span></span></code></pre><pre id="https://www.notion.so/d5ea6163553a45b9acd6c36438aaa94e" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>sudo mkdir -p /var/log/mariadb/
+
+sudo chown mysql:mysql -R /var/log/mariadb/
+
+sudo chmod 755 /var/log/mariadb/
+
+cd /usr/local/mysql/bin/
+
+sudo ./mysqld --defaults-file=/etc/my.cnf --basedir=/usr/local/mysql/ --datadir=/usr/local/mysql/data/ --user=mysql --initialize</span></span></span></code></pre><div id="https://www.notion.so/f49789efb2e941d9a811ba3ea861a345" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/98b28ea1be724ed5a5175b93779bc073" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">如果遇到libaio.so.1没有，去下载，这是正常现象</mark></span></span></p></div><pre id="https://www.notion.so/94733d0e1cc94f029fba5b3f6d95a419" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>sudo yum install -y libaio</span></span></span></code></pre><pre id="https://www.notion.so/eeaf687d7be74329883ac225558b99be" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>sudo cp /usr/local/mysql/support-files/mysql.server /etc/init.d/mysql
+
+sudo ln -s /usr/local/mysql/bin/mysql /usr/bin
+
+sudo service mysql start</span></span></span></code></pre><div id="https://www.notion.so/e313c938160d4010b85d62b18cd0d40a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/bc343fa9f2134dbb8c59da81947cf6ca" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">如果报错： log-error set to &#x27;/var/log/mariadb/mariadb.log&#x27;, however file don&#x27;t exists. Create writable for user &#x27;mysql&#x27;.</mark></span></span></p></div><div id="https://www.notion.so/40476d121ff34acc833d6695794f922f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">则：</mark></span></span></p></div><pre id="https://www.notion.so/bc03eeb5592b48a69dfcca00c5754698" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>sudo touch /var/log/mariadb/mariadb.log
+
+sudo chown -R mysql:mysql  /var/log/mariadb/</span></span></span></code></pre><div id="https://www.notion.so/e0e5f92db932402692a299e5705d5e1e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><pre id="https://www.notion.so/17b5c59e7dcb4f5085790bf29690ab12" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>sudo cat /usr/local/mysql/data/mysql.err查看密码
+
+sudo mysql -uroot -p&#x27;密码&#x27; 密码如果有特殊字符必须用&#x27;包裹
+
+SET PASSWORD = PASSWORD(&#x27;123456&#x27;);
+
+ALTER USER &#x27;root&#x27;@&#x27;localhost&#x27; PASSWORD EXPIRE NEVER;
+
+FLUSH PRIVILEGES;
+
+use mysql;
+
+update user set host = &#x27;%&#x27; where user = &#x27;root&#x27;;
+
+FLUSH PRIVILEGES;</span></span></span></code></pre><div id="https://www.notion.so/e8c10dce0ecc4457a586955305356f21" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/5343355956894cd5921d407b79db3faf" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/5343355956894cd5921d407b79db3faf"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">配置主从复制(使用GTID进行复制)</span></span></h2><h3 id="https://www.notion.so/e8ef3c79dfeb49568b90a4614b194b4e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/e8ef3c79dfeb49568b90a4614b194b4e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">主服务器配置：</span></span></h3><pre id="https://www.notion.so/d15ae6b403b34c63a93c421e635178c9" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>[mysqld]
+
+server-id=28 #唯一标识符
+
+gtid_mode=on #开启gtid
+
+enforce_gtid_consistency=on # 阻止会影响复制正确性的语句执行也就是有些mysql语句会执行不了
+
+log-bin=mysql-bin # enable binary logging
+
+innodb_flush_log_at_trx_commit=1 #保障每个事务都被同步地写到磁盘
+
+sync_binlog=1 #每次事务执行时都把二进制日志同步写入磁盘，防止在服务器崩溃时丢失事务
+
+binlog_format=row #按行复制
+
+skip_slave_start=on #Tells the replica server not to start the replication threads when the server starts.To start the threads later, use a START SLAVE statement.
+
+log_slave_updates=on #从sql线程写入也会写到二进制日志</span></span></span></code></pre><div id="https://www.notion.so/fd5b2cd550ae4d9f816ee5a354e6b998" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/21871d08cf214bfd946702899f8890c0" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/21871d08cf214bfd946702899f8890c0"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">从服务器配置：</span></span></h2><pre id="https://www.notion.so/3226c27a98e44474b01f061139c641b0" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>[mysqld]
+
+server_id=29
+
+gtid_mode=on
+
+enforce_gtid_consistency=on
+
+log-bin=mysql-bin
+
+innodb_flush_log_at_trx_commit=1
+
+sync_binlog=1
+
+binlog_format=row
+
+skip_slave_start=on
+
+log_slave_updates=on</span></span></span></code></pre><div id="https://www.notion.so/5465606f96074443be6044e7de67803e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/c24ce65215ca4b85913dd2a99a3d6cc0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">以下操作都是连接mysql后执行</span></span></p></div><div id="https://www.notion.so/8b0a5896b6ef4031959da3dd13910ec7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/c26ed867e0204ea6aeb7ce5951d3cf91" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">检查GTID开启 </span></span></p></div><pre id="https://www.notion.so/5cdc5dc17ab24caeb242bbff9f15d1d8" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">show</span> variables <span class="token operator">like</span> <span class="token string">'%gtid%'</span><span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/4a47c76c41bb433d9aa84e876cc589a2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/6707e638d2f648ca99ce5e84addfc9c8" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">主库建立授权用户</span></span></p></div><pre id="https://www.notion.so/f058bdd6a2b14aa3a1af5aededc767b5" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">grant</span> <span class="token keyword">replication</span> slave <span class="token keyword">on</span> <span class="token operator">*</span><span class="token punctuation">.</span><span class="token operator">*</span> <span class="token keyword">to</span> <span class="token string">'slave'</span><span class="token variable">@'10.10.100.10'</span> identified <span class="token keyword">by</span> <span class="token string">'slave_2022!'</span><span class="token punctuation">;</span>
+FLUSH <span class="token keyword">PRIVILEGES</span><span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/0aa9bb16ae4c48f19124727f48d8e670" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/cf887f4dcabf485f8318221ae66ef403" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">slave连接到master</span></span></p></div><pre id="https://www.notion.so/daa5fb5bc626459ea3c32d38d4b08524" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>CHANGE MASTER <span class="token keyword">TO</span>
+
+MASTER_HOST<span class="token operator">=</span><span class="token string">'10.79.185.28'</span><span class="token punctuation">,</span>
+
+MASTER_USER<span class="token operator">=</span><span class="token string">'slave'</span><span class="token punctuation">,</span>
+
+MASTER_PASSWORD<span class="token operator">=</span><span class="token string">'slave_2022!'</span><span class="token punctuation">,</span>
+
+MASTER_PORT<span class="token operator">=</span><span class="token number">3306</span><span class="token punctuation">,</span>
+
+MASTER_AUTO_POSITION <span class="token operator">=</span> <span class="token number">1</span><span class="token punctuation">;</span><span class="token comment"># 1 代表采用GTID协议复制 0 代表采用老的binlog复制</span>
+
+<span class="token keyword">start</span> slave<span class="token punctuation">;</span><span class="token comment"># 开启主从复制</span></span></span></span></code></pre><div id="https://www.notion.so/5ec5ef92c25c41e5b893837a91489517" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/4b4045307891467cada68edad59b60e0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">master上查看salve信息：</span></span></p></div><pre id="https://www.notion.so/6aab8119d0cd4ca6bca036ec9c27e9f6" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">show</span> slave hosts<span class="token punctuation">;</span><span class="token comment">#（可能要等一会才有）</span></span></span></span></code></pre><div id="https://www.notion.so/a0a22d58f1fe40e69afbe83e15b54394" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/253bb48be1ef4d5c8ba0366be3dc4644" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/253bb48be1ef4d5c8ba0366be3dc4644"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">验证：</span></span></h2><div id="https://www.notion.so/c7c976a851bf45b987c7c81eb6f4e76d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">主数据库执行</span></span></p></div><pre id="https://www.notion.so/ed53b1aedbb64d8590a9af49561648ec" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token keyword">CREATE</span> <span class="token keyword">SCHEMA</span> <span class="token identifier"><span class="token punctuation">`</span>test1<span class="token punctuation">`</span></span> <span class="token keyword">DEFAULT</span> <span class="token keyword">CHARACTER</span> <span class="token keyword">SET</span> utf8mb4 <span class="token keyword">COLLATE</span> utf8mb4_unicode_ci <span class="token punctuation">;</span></span></span></span></code></pre><div id="https://www.notion.so/dd918d9e62ec4ae9bc5e97d5af7bc879" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">查看从数据库是否有对于的库</span></span></p></div><div id="https://www.notion.so/9036def6a2cc4a5289fd5852e15b109e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h2 id="https://www.notion.so/89dd2e4becd14f73ac1e5eab804e7213" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--2"><a class="Anchor" href="#https://www.notion.so/89dd2e4becd14f73ac1e5eab804e7213"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">额外：</span></span></h2><h3 id="https://www.notion.so/f776095c55d24ce193c2c8f9506e4ea3" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/f776095c55d24ce193c2c8f9506e4ea3"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">迁移数据到新磁盘：</span></span></h3><pre id="https://www.notion.so/8efa50e6e6f340ed8bb87b4e4b5d7fd8" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span>sudo service mysql stop
+
+sudo mkdir -p /export/mysql
+
+cd /usr/local/mysql
+
+sudo cp -ar data /export/mysql/data
+
+sudo ln -s /export/mysql/data /usr/local/mysql/data</span></span></span></code></pre><div id="https://www.notion.so/061c293bc7a24241ba17d359d04421c8" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">(在从服务器上重新执行连接master的语句和start slave语句)</span></span></p></div><div id="https://www.notion.so/efd81932b57040329538c8f3e515363e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">Starting MySQL... ERROR! The server quit without updating PID file (/usr/local/m ysql/data/mysql.pid). 如果修改my.cnf文件中有语法问题，也会报这个错。</mark></span></span></p></div><div id="https://www.notion.so/ccb3a987e83c497884b854a4865a6016" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+  <script src="https://utteranc.es/client.js"
+        repo="Dragonchu/Dragonchu.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
+  <footer class="Footer">
+  <div>&copy; DragonChuBlog 2022</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
