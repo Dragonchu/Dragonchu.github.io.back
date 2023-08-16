@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>【翻译】每个开发者都必须了解的unicode和character sets（字符集）知识点&nbsp;|&nbsp;DragonChuBlog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="【翻译】每个开发者都必须了解的unicode和character sets（字符集）知识点">
+  
+    <meta name="description" content="短短续续翻译了半个月，终于翻译完了😩">
+    <meta property="og:description" content="短短续续翻译了半个月，终于翻译完了😩">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>首页</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🧑‍💼&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>简历</span>
+        </div>
+      </a>
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="todo.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📌&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>清单</span>
+        </div>
+      </a>
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">【翻译】每个开发者都必须了解的unicode和character sets（字符集）知识点</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, Aug 1, 2023</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--green">
+            <a href="tag/翻译.html">翻译</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+            <a href="tag/最新文章.html">最新文章</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/434f51fee6dd43aa9de113f87300b7dd" class="PageRoot"><blockquote id="https://www.notion.so/1881e22124114d77ba5f603d160f9485" class="ColorfulBlock ColorfulBlock--ColorDefault Quote"><span class="SemanticStringArray"><span class="SemanticString">原文地址：</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/">https://www.joelonsoftware.com/2003/10/08/the-absolute-minimum-every-software-developer-absolutely-positively-must-know-about-unicode-and-character-sets-no-excuses/</a></span></span></blockquote><div id="https://www.notion.so/a7f819fd21174ffdbca3e5ab9476b9dd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">你有没有想过content-type这个Tag是做什么的？就是当你写HTML时应该写的但是你从来不知道应该填什么的content-type。</span></span></p></div><pre id="https://www.notion.so/ff827c3dc75b451298e4cca11facfbd6" class="Code Code--NoWrap"><code><span class="SemanticStringArray"><span class="SemanticString"><span><span class="token property">Content</span>-<span class="token attr-name">Type</span><span class="token punctuation">:</span> <span class="token property">text</span>/<span class="token property">html</span>; <span class="token property">charset</span><span class="token operator">=</span><span class="token property">utf</span>-<span class="token number">8</span>
+<span class="token property">Content</span>-<span class="token attr-name">Type</span><span class="token punctuation">:</span> <span class="token property">multipart</span>/<span class="token property">form</span>-<span class="token property">data</span>; <span class="token property">boundary</span><span class="token operator">=</span><span class="token property">something</span></span></span></span></code></pre><div id="https://www.notion.so/831e94e8cb2b45d3a233f7492377c347" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">你有没有收到过一份邮件里面有一行“？？？？？？？？？？？？“</span></span></p></div><div id="https://www.notion.so/9f1fbbf1a8074628af7bf5c320073047" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">我惊讶地发现有太多的开发者并不了解character sets, encodings, Unicode这些东西。</span></span></p></div><div id="https://www.notion.so/305b69e1251b4e27adec0237cd7a2856" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">几年前，一个测试问我</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.fogcreek.com/FogBUGZ">FogBUGZ</a></span><span class="SemanticString">（译者注:可能是原作者开发的一个软件）能不能用日语处理收到的邮件。日语？他们有用日语写的邮件？我完全没想过这回事。当我们仔细检查用来解析MIME邮件的商用版ActiveX control时，我们发现它确实错误处理了字符集（character sets)，所以我们不得不写了一份代码去回滚它的错误并且重新对邮件进行解析。当我去看另一个商用版库的源代码时，我发现它的字符代码实现也非常差劲。我联系了这个包的开发者，他说他“对这个包也做不了更多的事“。就像很多程序员一样，他只想这件事就这样过去得了。</span></span></p></div><div id="https://www.notion.so/9d120ca27e0443a89000538619582377" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">但是这件事不会就这样过去！当我发现主流的web开发工具PHP竟然有一个完全忽视字符集编码的issue（</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://ca3.php.net/manual/en/language.types.string.php">complete ignorance of character encoding issues</a></span><span class="SemanticString">），blithely使用了8个bit处理字符(characters)，导致他妈的几乎不可能拿php开发出好的互联网应用。我觉得，这一切都该结束了。</span></span></p></div><div id="https://www.notion.so/270441c529b74c4d9e79207ad1a5e8ee" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在此我宣誓：如果你是一个在2003年工作的程序员，而你不知道characters, character sets, encodings和Unicode的基础知识。假设你被我逮着了，那我就要惩罚你在潜艇里切6个月洋葱。我发誓我会这样做的。</span></span></p></div><div id="https://www.notion.so/0a1fb8046a3b44bfb142deec846c1293" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">还有一件事：</span></span></p></div><div id="https://www.notion.so/b6708a11a33c4dadae3108a804a936cd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/bc7c7b1e5d1e41bab7bb18da4010bd3b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">它没有那么难。</strong></span></span></p></div><div id="https://www.notion.so/5eeeecde4a4b4450947b2a62c39ba9d6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/4c9661c162624f42a73656823f92e284" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在本文我将告诉你每一个在职程序员都应该知道的基础知识。“普通文本等于ASCII等于字符（characters)都是8比特的”这种想法，不仅是错误的，而且是非常错误的。如果你还带着这种想法编程，那你差不多相当于一个不懂细菌的医生。求你在没读完这篇文章前不要再写任何一行代码了。</span></span></p></div><div id="https://www.notion.so/d26345fca1d74197bccdd85e996bcbdd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在开始之前，我有一个提醒，如果你是那种比较罕见的懂国际化(internationalization)的人，你会发现我接下来的讨论有点过于简单了。我只想把最简单的教给大家，这样每个人都知道发生什么事了，并且能编写可以处理各种语言的代码而不是只有英语（甚至不能带重读符号）。我还要提醒你，字符处理知识创建国际化软件的一小部分，我有时间可以写点其他方面的，但今天我们只讲字符集(character sets)。</span></span></p></div><h1 id="https://www.notion.so/b6ac2ceb27914394a5e5769613f45d9e" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/b6ac2ceb27914394a5e5769613f45d9e"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">历史角度</span></span></h1><div id="https://www.notion.so/c5ebeb7a7c3e4e07b9103c3eedac75a0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">了解一件事情最简单的方式就是跟着时间了解它。</span></span></p></div><div id="https://www.notion.so/015137aa588f4a05b9f755e290b5b27d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">你可能认为我会讲一些上古时期的字符集(character sets)比如EBCDIC。但是我不会。EBCDIC跟你的生活一点关系也没有。我们不会讲这么远的事。</span></span></p></div><div id="https://www.notion.so/d8ca39c3e13f4a3fad89558911cdcd09" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在中古时期，当Unix被发明出来而K&amp;R正在写《</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://cm.bell-labs.com/cm/cs/cbook/">The C Programming Language</a></span><span class="SemanticString">》的时候，一切都很简单。EBCDIC正在退出历史舞台了。唯一需要处理的字符是哪些不带重音的英文字母。我们有一套叫做</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.robelle.com/library/smugbook/ascii.html">ASCII</a></span><span class="SemanticString">的编码可以用32到127之间的数据代表每一个字符。空格是32，字母‘A’是65，诸如此类。这些数字可以很方便地用7个比特存储下来。那时候大部分电脑都是用8bit的字节(8-bit bytes), 所以你不仅可以存下每一个ASCII字符，你还多出来整整1个bit。如果你耍点小聪明，这1个比特可以用于自己的目的。WordStar中的那群傻瓜就把最高位用于表示每个单词的最后一个字母，导致WordStar只能打印英语。用小于32的数字表示的字符是无法打印的(unprintable)，被用于诅咒别人。开个玩笑。它们被当作控制字符使用(control characters)，比如7会让计算机蜂鸣，12会导致打印机上的当前纸张飞出，让新纸填入。</span></span></p></div><div id="https://www.notion.so/a4811d6ff65f4505b2a65acce3a485fe" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这一切都很美好，如果你是一个英语使用者的话。</span></span></p></div><div id="https://www.notion.so/4c295475ce4c47bdaee8003f9047351f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">因为每个字节使用了8个比特，许多人就想到，“我们可以把128-255的数字给自己用”。问题在于很多人同时有了相同的想法，而且他们对于128到255的数字的用法都有自己独特的想法。IBM-PC 有一些后来被称为 OEM 字符集的东西，它为欧洲语言提供了一些重音字符和一系列线条绘制字符... ... 水平条、垂直条、右边有小铃铛悬挂的水平条等等。</span></span></p></div><div id="https://www.notion.so/76cfc309192140cf892e83b2e528d6ed" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5a0c3d9b-77a9-4b87-9d3a-fe53fd099e23%2FUntitled.png?width=271&amp;table=block&amp;id=76cfc309-1921-40cf-892e-83b2e528d6ed"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F5a0c3d9b-77a9-4b87-9d3a-fe53fd099e23%2FUntitled.png?width=271&amp;table=block&amp;id=76cfc309-1921-40cf-892e-83b2e528d6ed" style="width:271px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/20f8d864d14f4124b8a8e8c66825daff" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">你可以用这些线条字符在屏幕上画好看的盒子和直线，用这些字符集画的画你仍然能在你的干洗机上的8088电脑上看到。事实上，当人们开始在美国以外购买个人电脑时，各种不同的OEM字符集就被设想出来了，这些字符集都是为了自己的目的而使用前128个字符。比如130在一些电脑上会被显示为é，但是在以色列售卖的电脑会将130显示为希伯来语Gimel（译者注：原文的字符打不出来）,所以当美国人发送résumés到以色列时，以色列人会收到r(Gimel)sum(Gimel)s。在很多情况下，比如在俄罗斯，关于如何使用前128个字符有非常多的想法，所以交换两个俄语文档都是可能有问题的。</span></span></p></div><div id="https://www.notion.so/2bd2e78990f0419a82344efe62a532d0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这种OEM混战的情况最终被ANSI标准敲定下来。在ANSI标准中，大家对小于128的数字该做什么都取得了一致认知，这点很像ASCII，但是从128开始的数字根据你所在的地区不同就有很多不同的方式处理了。这些不同的处理系统叫做</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.i18nguy.com/unicode/codepages.html#msftdos"><em class="SemanticString__Fragment SemanticString__Fragment--Italic">code pages</em></a></span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic">。</em></span><span class="SemanticString">比如以色列的DOS用的code page叫做862， 而希腊人使用的是737。小于128都是一样的，但是从128开始都完全不同了，而很多有趣的字母就出现在128之上（包括128）。MS-DOS的国际化版本有许多code page， 这些code page能处理各种语言，从英语到冰岛语，它们甚至还有一些多语言（multilingual）的code page可以同时在一台电脑上处理世界语和加利西亚语。哇！但是，在同一台计算机上同时显示希伯来语和希腊语是完全不可能的，除非你编写自己的自定义程序，使用位图图形显示所有内容，因为希伯来语和希腊语需要不同的代码页，对大数有不同的解释。</span></span></p></div><div id="https://www.notion.so/a11e2e60d69444259273029dcc3eac02" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">与此同时，亚洲的有成千上万的文字(letter)，这些文字用8个比特是不可能装的下的。有一种糟糕的系统叫做DBCS（double byte character set）用来解决这类问题。在DBCS中，一些文字用1个字节存储，而另一些则使用两个字节存储。在字符串中向前移动很容易，但向后移动却几乎不可能。我们鼓励程序员不要使用 s++ 和 s- 来前后移动字符串，而是调用 Windows 的 AnsiNext 和 AnsiPrev 等函数，它们知道如何处理整个混乱的字符串。</span></span></p></div><div id="https://www.notion.so/37878ed14f2e4b6f8fc5ed0cc74f78b7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">但是只要从来不把一个字符串总一台电脑挪到另一台电脑上，或者只讲一种语言，那么人们还是简单地将1个字节视作1个字符，1个字符是8个比特。显而易见的，互联网诞生之后，字符串从一台电脑移到另一台电脑已经是一个很常见的事了，所以使用DBCS造成的乱局就扛不住了。幸运的是，人们发明了Unicode。</span></span></p></div><h1 id="https://www.notion.so/455c6cc9f7a14de1867531c0d4268a0c" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/455c6cc9f7a14de1867531c0d4268a0c"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Unicode</span></span></h1><div id="https://www.notion.so/6ff1d95efad04a089a8da98283a2b6f5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Unicode是一个大胆的尝试，它试图创建一个可以包含地球上所有的合理书写系统和一些幻想语言比如克林贡语（专门为电影星际迷航制作的语言）的字符集（character set）。很多人都有一种错误的理解，认为Unicode就是一串16比特的数字，每个字符都有一个唯一的16bit数字，所以一共有65536种字符。</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">这是完全错误的想法。</strong></span><span class="SemanticString">当然这是对Unicode的常见误解，所以如果你有这个想法，也不要沮丧。</span></span></p></div><div id="https://www.notion.so/e04dd4f46b8c438fa10ef0772669d544" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">事实上，Unicode对于字符（characters）有一种完全不同的思考方式，你必须理解Unicode的思考方式才能理解Unicode。</span></span></p></div><div id="https://www.notion.so/def4b3f67f4c44a38c25719d97ec171a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">直到现在，我们都一直假设每个字母或者文字都是映射到一串存储到磁盘或者内存的bits上。</span></span></p></div><div id="https://www.notion.so/1ef705ee16094b2ebd2753a723d188dd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">A→0100 0001</strong></span></span></p></div><div id="https://www.notion.so/b6cee334095b4820ae39c3347bcd11fe" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在Unicode中，每个字母或者文字都被映射到称作“码点”（code point)的东西上，”码点“到现在还是一个理论话题。码点是如何在磁盘或者内存中表示的是另一个故事了。</span></span></p></div><div id="https://www.notion.so/a98a831f224f4ddf8030c307481f27ea" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在Unicode中，字母A是一种抽象的想法。它是完全虚无缥缈的。</span></span></p></div><div id="https://www.notion.so/90729bd3f947488db95c13a4c81473e2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">A和B是不同的，A和a也是不同的，但是A和</span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic">A（斜体）</em></span><span class="SemanticString">以及</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">A（粗体）</strong></span><span class="SemanticString">是一样的</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">。</strong></span><span class="SemanticString">这个想法的本质是不同字体的A都是一样的，但是A和小写的“a”是不一样的，这看上去没什么争议，但是在一些语言中一个字母到底是什么是有可能有冲突的。比如在德语里，字母ß是一个字母还是ss的一种时尚的书写方式？如果一个单词最后一个字母的形状发生了改变，这个字母是一个新的字母吗？希伯来人会认为这个字母是新的字母，但阿拉伯人可不这么认为。总之，Unicode委员会的聪明人在过去的几十年里通过大量的政治化的辩论把这些问题都解决了，你在也不需要担心这些问题，这些问题都已经被解决了。</span></span></p></div><div id="https://www.notion.so/fa568bcec4b6450eb1e8bd1904ad7144" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Unicode委员会讲每个字母表中的每个字母都用一个神奇的编码标记了，就像这样：</span><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">U+0639</strong></span><span class="SemanticString">。这个神奇的编码就被叫做“码点”（code point）。U+的含义是”Unicode”, 后面的数字是16进制的。U+0639是阿拉伯字母Ain。英语字母A的码点是U+0041。你可以使用Windows2000/XP的charmap工具或者访问</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.unicode.org/">the Unicode web site</a></span><span class="SemanticString">来看到所有的码点。</span></span></p></div><div id="https://www.notion.so/50dd0142fe1b493794925d6c1ddc8e5b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">对于Unicode能定义的字母上限没有实际的限制，事实上早就超过了65536，所以有些unicode字母是没办法用两个字节表示的。</span></span></p></div><div id="https://www.notion.so/3127aa09353b4c16963ecc709f070825" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">假设我们现在有一个字符串：</span></span></p></div><div id="https://www.notion.so/b8085299eabf4811a92a4199e53c6f67" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">Hello</strong></span></span></p></div><div id="https://www.notion.so/6b88055f525e4471921aadb4bb6967d8" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">在Unicode中，这个字符串会用如下5个码点表示：</span></span></p></div><div id="https://www.notion.so/4bbedd0080fb47c3bc207f35cc498a39" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">U+0048 U+0065 U+006C U+006C U+006F</span></span></p></div><div id="https://www.notion.so/ede75ea9d26a4b9bb16ab17bc8f20f8b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">就是一串码点，或者说就是一串数字。我们还没有讨论如何讲这些码点存到内存中或者在邮件中表示它们。</span></span></p></div><h1 id="https://www.notion.so/792ff495c7e24eec805d7648f11c6c0f" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/792ff495c7e24eec805d7648f11c6c0f"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">Encodings</span></span></h1><div id="https://www.notion.so/3ac3dc5f41264ec98545fa91492eba03" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">现在该轮到编码（Encodings）出场了。</span></span></p></div><div id="https://www.notion.so/805e85e8c35d42e9a72b27c8614d9ba6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">最早存储Unicode编码的想法是直接把这些数据存到两个字节里，这就是《两个字节》神话的来源。所以，“Hello”就变成了</span></span></p></div><div id="https://www.notion.so/be1c11290f694d9eb07f05f6df780c81" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">00 48 00 65 00 6C 00 6C 00 6F</span></span></p></div><div id="https://www.notion.so/17c6af24584941d8922730223d27f594" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这样就对了吗？别急。难道不能写成：</span></span></p></div><div id="https://www.notion.so/375c6cb6f8054d0b991ce60ccfe04f0f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">48 00 65 00 6C 00 6C 00 6F 00</span></span></p></div><div id="https://www.notion.so/26ce8ee39c2a4254b54ecb3e33e093f6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">技术上确实可行，事实上，早期的实现者们想要根据他们的CPU将Unicode码点按照大端或者小端模式存储（哪种快就按哪种存储）。这样就导致从某个时间开始，就有两种方式存储Unicode了。所以人们不得不想出一个别扭的点子：在Unicode字符串前存储一个FE或者FF，这叫做</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://msdn.microsoft.com/library/default.asp?url=/library/en-us/intl/unicode_42jv.asp">Unicode Byte Order Mark</a></span><span class="SemanticString">，如果你正在交换你的高字节和低字节，它看起来就像一个 FF FE，读取你的字符串的人就会知道，他们必须每隔一个字节交换一次。咦（嫌弃）～。不是每个字符串都在开头有一个自己的顺序标识（a byte order mark）。</span></span></p></div><div id="https://www.notion.so/a18487ef54c943c180055f3056267eff" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">有那么一瞬间整件事情看上去很好的，但是有一群程序员开始抱怨。“看看这么多零！”，因为他们都是美国人，他们只看英文字母，而英文字母是几乎不会用到大于U+00FF的码点的。此外，他们还是加利福尼亚的自由派嬉皮士，希望保护环境（嗤之以鼻）。如果他们是得克萨斯人，那他们应该一点也不在乎两倍的字节数。（译者注：这里玩的梗类似斤斤计较的上海人和大大咧咧的东北人，非地域黑😊）。但这些加利福尼亚的嬉皮士一点也忍受不了Unicode把字符串的存储空间加倍，而且已经有很多狗娘养的文档使用了各种ANS和DBCS字符集，谁来给他们做转化？老子吗？因为这些原因，大部分人在好几年里都决定无视Unicode，与此同时，情况变得越来越糟糕了。</span></span></p></div><div id="https://www.notion.so/80788c363f9848938c94c1b83f939a9b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">因此，绝世无双的</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.utf-8.com/">UTF-8</a></span><span class="SemanticString">被发明（</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.cl.cam.ac.uk/~mgk25/ucs/utf-8-history.txt">invented</a></span><span class="SemanticString">）出来了。UTF-8是另一种用来存储你用Unicode码点表示的字符串的系统，这些神奇的U+数字在内存里使用8bit的字节表示。在UTF-8里，0-127的码点都存储在1个字节中。只有128和128之上的码点使用2，3最多能有6个字节表示。</span></span></p></div><div id="https://www.notion.so/023d8f369cf44fa6b5e65e13e770043f" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fce9c8261-54df-43eb-9b04-f9023c47ba6f%2FUntitled.png?width=400&amp;table=block&amp;id=023d8f36-9cf4-4fa6-b5e6-5e13e770043f"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Fce9c8261-54df-43eb-9b04-f9023c47ba6f%2FUntitled.png?width=400&amp;table=block&amp;id=023d8f36-9cf4-4fa6-b5e6-5e13e770043f" style="width:400px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/d88347fb644140c181e57da74e6d3cdf" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这样做的好处是，英语的文本使用UTF-8和使用ASCII是完成一样的，所以美国人甚至都不会察觉到发生什么事了。只有全世界其他地区不得不过五关斩六将。举个例子，Hello的Unicode表示是U+0048 U+0065 U+006C U+006C U+006F，在UTF-8下将会被存储为48 65 6C 6C 6F，这和使用ASCII，ANSI，以及地球上任何一个OEM字符集都是一样的。现在，如果你是一个敢于冒险的人想要使用一些带重读音节的字母或者希腊字母或者克林贡语，你都必须使用多个字符来存储一个码点，但是美国人压根不会感觉到。（UTF-8 还具有一个很好的特性，即那些希望使用单个 0 字节作为空字符结束符的旧字符串处理代码不会截断字符串）</span></span></p></div><div id="https://www.notion.so/09cc3e74bbf242018759bd27d0051bff" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">到目前为止，我已经告诉了你三种 Unicode 编码方法。传统的存储在两个字节中的方法被称为 UCS-2（因为它有两个字节）或 UTF-16（因为它有 16 位），但你得搞清楚它是高字节 UCS-2 还是低字节 UCS-2。还有一种流行的UTF-8标准，它有一个很好的特性，那就是如果你正好有英文文本和完全不知道 ASCII 以外还有其他东西的白痴程序，那么它也能正常工作。</span></span></p></div><div id="https://www.notion.so/3093d03a4c3b437f80d6c9e706433842" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">实际上还有很多其他编码Unicode的方式。有一种编码叫做UTF-7，它和UTF-8很像，但是UTF-7允许高位bit一直为0，所以如果你不得不将Unicode通过某种严格的</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://zh.wikipedia.org/zh-hans/%E8%AD%A6%E5%AF%9F%E5%9B%BD%E5%AE%B6#:~:text=%E8%AD%A6%E5%AF%9F%E5%9B%BD%E5%AE%B6%EF%BC%88%E8%8B%B1%E8%AF%AD%EF%BC%9APolice%20state,%E6%8E%A7%E5%88%B6%E4%BA%BA%E6%B0%91%E7%94%9F%E6%B4%BB%E7%9A%84%E7%A4%BE%E4%BC%9A%E3%80%82">警察国家</a></span><span class="SemanticString">邮件系统（这种系统认为7个bit就足够了），那很庆幸你还是可以毫发无损的将Unicode塞过去。还有一种编码叫做UCS-4，它把每个码点存储在4个字节中，这样每个码点都可以使用相同数目的字节进行存储，可是，老天爷，就算是得克萨斯人也没大胆到浪费那么多内存。</span></span></p></div><div id="https://www.notion.so/1a43527811e14526b0c9daf53be0a43d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">现在实际上你已经在有一种抽象的用Unicode码点表示的字母来思考问题了，这些Unicode码点当然也可以用任何传统的编码schema处理。比如，你可以用ASCII编码Hello的Unicode字符串（U+0048 U+0065 U+006C U+006C U+006F)，或者老的OEM希腊编码，或者希伯来ANSI编码，或者任何一种目前为止发明过的编码方式，只是有一点要注意：有一些字母可能不会出现。如果你想要表示的Unicode代码在编码系统中没有对应的等价物，那你通常会得到一个问号：？或者，你比较厉害，你会得到一个盒子。? -&gt; �</span></span></p></div><div id="https://www.notion.so/abaca3fbf9634dfeb9be3ffae1f3b5a9" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">传统的编码方法有数百种，它们只能正确地存储一些代码点，而将所有其他代码点更改为问号。一些流行的英语文本编码是Windows-1252(西欧语言的Windows 9x标准)和ISO-8859-1，又名Latin-1(也适用于任何西欧语言)。但是试图在这些编码中存储俄语或希伯来字母，你会得到一堆问号。UTF 7、8、16和32都能够正确存储任何代码点。</span></span></p></div><h1 id="https://www.notion.so/d479dd81768941129624ba390a0a6825" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/d479dd81768941129624ba390a0a6825"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">关于编码的一个最重要的事实</span></span></h1><div id="https://www.notion.so/bcd9774ddb9b4463933e884fd95e7a51" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">如果你完全忘记了我刚刚解释的一切，请记住一个非常重要的事实。脱离使用的编码系统而空谈字符串是毫无意义的。你不能像鸵鸟一样把脑袋埋在沙子里假装“plain”文本就是ASCII。</span></span></p></div><div id="https://www.notion.so/b810a8441a384bbea591e44b85906f18" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">根本就没有所谓的“Plain Text”。</span></span></p></div><div id="https://www.notion.so/4c9af109b0c64ee686259e9d2bb15a20" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">如果你在内存中、文件中或电子邮件消息中有一个字符串，你必须知道它的编码，否则你无法正确地解释它或将其显示给用户。</span></span></p></div><div id="https://www.notion.so/043e0a4eaa354827add6ecbc94916564" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">几乎每个傻瓜问题比如“我的网站看上去在胡言乱语”或者“当我用了一些方言时她就读不了我发的邮件了”，都归咎于一个天真的程序员。这个天真的程序员没有意识到一个简单的事实，那就是如果你不告诉我一个字符串使用的编码是UTF-8或ASCII或ISO8859-1（Latin 1）又或是Windows 1252 (Western European)，你就无法正确的显示它，甚至都不知道它的终止符在哪里。有几百种编码系统，在码点127上瞎猜是没用的。</span></span></p></div><div id="https://www.notion.so/10b15ff4e49c44149bc932003433386e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">我们如何保存一个字符串使用的编码信息？有一种标准方式。对于邮件消息，你会在表单的开头收到一个字符串。</span></span></p></div><blockquote id="https://www.notion.so/531c4bc8fd114e68a622b500a9fc0f71" class="ColorfulBlock ColorfulBlock--ColorDefault Quote"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">Content-Type: text/plain; charset=&quot;UTF-8&quot;</strong></span></span></blockquote><div id="https://www.notion.so/3a00a5e7c38f4fd8b30296f59d77a4e2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">对于网页，最初的想法是web服务器将返回一个类似的Content-Type http报头与网页本身一起，不是在HTML本身中，而是作为在HTML页面之前发送的响应报头之一。</span></span></p></div><div id="https://www.notion.so/96ad06a1fecf49a1b9063a339c0843b3" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这就产生了问题。假设你有一个大型的web服务器，上面有许多站点和数百个页面，这些页面由许多人用许多不同的语言编写，并且这些页面都是用了适合他们自己的编码方式。web服务器本身无法知道每个文件都是用了什么编码系统，所以它没有办法发送Content-type头。</span></span></p></div><div id="https://www.notion.so/a3496b19ba8648dc92579ab0377e3504" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">如果可以使用某种特殊标记，将HTML文件的Content-Type直接放在HTML文件本身中，那就方便多了。当然，这让纯粹主义者抓狂——在不知道HTML文件的编码之前，怎么能读取它呢?幸运的是，几乎所有常用的编码系统都对32到127之间的字符做同样的事情，所以你总是可以在HTML页面上完成这一步，而不必开始使用奇怪的字母</span></span></p></div><blockquote id="https://www.notion.so/a72862874dd3458297440724ecbf40ee" class="ColorfulBlock ColorfulBlock--ColorDefault Quote"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">&lt;html&gt;&lt;head&gt;</strong></span></span><div id="https://www.notion.so/cebda2af66fc46daaa3789ac72d8733d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">&lt;meta http-equiv=&quot;Content-Type&quot; content=&quot;text/html; charset=utf-8&quot;&gt;</strong></span></span></p></div></blockquote><div id="https://www.notion.so/052d5592527742aaa2370b990fb111f7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">但是这个元标签必须是&lt;head&gt;部分的第一件事，因为一旦web浏览器看到这个标签，它就会停止解析页面，并在使用您指定的编码重新解释整个页面后重新开始。</span></span></p></div><div id="https://www.notion.so/6634b203e1c04eef872a69bb63cc1823" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">如果浏览器没有在header中也没有在元标签中找到Content-Type会做什么呢？浏览器事实上会做一件很有趣的事情：它试图去猜，根据不同语言的典型编码中不同字节在典型文本中出现的频率，判断使用了什么语言和编码。因为各种旧的8位代码页（code pages）倾向于将其国家字母放在128到255之间的不同范围内，而且因为每种人类语言都有不同的字母使用特征直方图，所以这实际上有可能奏效。这确实很奇怪，但它似乎经常工作，天真的网页作者从不知道他们需要一个Content-Type标题，在网页浏览器中查看他们的页面，看起来还不错，直到有一天，他们写的东西不完全符合他们母语的字母频率分布，Internet Explorer认定这是韩语，并显示它。相信我，</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://en.wikipedia.org/wiki/Robustness_principle">Postel’s Law</a></span><span class="SemanticString">的“对输入自由，对输出保守”（conservative in what you emit and liberal in what you accept）老实说不是一个好的工程原则。不管怎么说，这个网站的可怜读者怎么做，网站是用保加利亚语写的，但看起来是韩语(甚至不是连贯的韩语)。他使用View | Encoding菜单，尝试了一堆不同的编码(至少有十几种东欧语言的编码)，直到画面变得更清晰。如果他知道该怎么做，而大多数人都不知道。</span></span></p></div><div id="https://www.notion.so/a9fe356b767e445199101777efe7bbfd" class="Image Image--Normal"><figure><a href="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4f28661b-5ffd-454f-90db-ed3486fabb1b%2FUntitled.png?width=300&amp;table=block&amp;id=a9fe356b-767e-4451-9910-1777efe7bbfd"><img src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2F4f28661b-5ffd-454f-90db-ed3486fabb1b%2FUntitled.png?width=300&amp;table=block&amp;id=a9fe356b-767e-4451-9910-1777efe7bbfd" style="width:300px"/></a><figcaption><span class="SemanticStringArray"></span></figcaption></figure></div><div id="https://www.notion.so/830a8fee2bec4f7fac706c6c1d9187f6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">对于我公司（</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.fogcreek.com/">my company</a></span><span class="SemanticString">）发布的网站管理软件的最新版本（</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="http://www.fogcreek.com/CityDesk">CityDesk</a></span><span class="SemanticString">），我们决定在UCS-2（两个字节）Unicode中进行内部操作，这是Visual Basic，COM和Windows NT/2000/XP的使用他们的本机字符串类型。在C ++代码中，我们只是将字符串声明为WCHAR_T（“宽字符”），而不是CHAR，并使用WCS函数而不是STR函数（例如WCSCAT和WCSLEN而不是Strcat和Strcat和Strlen）。要在C代码中创建字面的UCS-2字符串，您只是将L放在其之前：L“ Hello”。</span></span></p></div><div id="https://www.notion.so/2f650b14888e4319b2d72ba35c12aca1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">当CityDesk发布网页时，它将其转换为UTF-8编码，该编码已得到了Web浏览器的大量支持多年。这就是</span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic">Joel on Software</em></span><span class="SemanticString">的所有29个语言版本（</span><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://www.joelonsoftware.com/navLinks/OtherLanguages.html">29 language versions</a></span><span class="SemanticString">）的编码方式，我还没有听到任何一个人的人在查看它们时遇到任何困难。</span></span></p></div><div id="https://www.notion.so/8d53dffd3b0648b9ad973a71ffd7c027" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">这篇文章很长，我不可能涵盖字符编码和Unicode的所有内容，但我希望如果你已经读到这里了，那么你已经了解到足够的知识去继续写代码了，去使用抗生素而不是水蛭和咒语，这是我现在留给你的任务。</span></span></p></div></article>
+  <div class="comment">
+    <div id="cusdis_thread"
+    data-host="https://cusdis.com"
+    data-app-id="96ca3fa6-7d19-4a76-a230-d9c37c8c46b3"
+    data-page-id="434f51fee6dd43aa9de113f87300b7dd"
+    data-page-url="unicodecharacter-sets-434f51.html"
+    data-page-title="【翻译】每个开发者都必须了解的unicode和character sets（字符集）知识点"
+    </div>
+    <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+  </div>
+  <footer class="Footer">
+  <div>&copy; DragonChuBlog 2022</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
