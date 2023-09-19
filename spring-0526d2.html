@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!-- iOS Safari -->
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<!-- Chrome, Firefox OS and Opera Status Bar Color -->
+<meta name="theme-color" content="#FFFFFF">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
+<link rel="stylesheet" type="text/css"
+  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
+<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
+<link rel="stylesheet" type="text/css" href="css/theme.css">
+<link rel="stylesheet" type="text/css" href="css/notablog.css">
+<!-- Favicon -->
+
+  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;">
+
+<style>
+  :root {
+    font-size: 20px;
+  }
+</style>
+  <title>使用Spring自动注入时必须使用构造函数注入方式！&nbsp;|&nbsp;DragonChuBlog</title>
+  <meta property="og:type" content="blog">
+  <meta property="og:title" content="使用Spring自动注入时必须使用构造函数注入方式！">
+  
+  
+  <style>
+    .DateTagBar {
+      margin-top: 1.0rem;
+    }
+  </style>
+</head>
+
+<body>
+  <nav class="Navbar">
+  <a href="index.html">
+    <div class="Navbar__Btn">
+      
+        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+      
+      <span>首页</span>
+    </div>
+  </a>
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="about.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🧑‍💼&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>简历</span>
+        </div>
+      </a>
+    
+  
+    
+      <span class="Navbar__Delim">&centerdot;</span>
+      <a href="todo.html">
+        <div class="Navbar__Btn">
+          
+            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📌&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
+          
+          <span>清单</span>
+        </div>
+      </a>
+    
+  
+</nav>
+  <header class="Header">
+    
+    <div class="Header__Spacer Header__Spacer--NoCover">
+    </div>
+    
+    <h1 class="Header__Title">使用Spring自动注入时必须使用构造函数注入方式！</h1>
+    
+      <div class="DateTagBar">
+        
+          <span class="DateTagBar__Item DateTagBar__Date">Posted on Tue, Sep 19, 2023</span>
+        
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--orange">
+            <a href="tag/Spring.html">Spring</a>
+          </span>
+        
+          <span class="DateTagBar__Item DateTagBar__Tag DateTagBar__Tag--purple">
+            <a href="tag/最新文章.html">最新文章</a>
+          </span>
+        
+      </div>
+    
+  </header>
+  <article id="https://www.notion.so/0526d2c3a89147058fa7ffaad58f89b2" class="PageRoot"><div id="https://www.notion.so/f2a6f9010ad443119d39423ccfb2b46f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://docs.spring.io/spring-framework/docs/5.3.25/reference/html/core.html#spring-core">https://docs.spring.io/spring-framework/docs/5.3.25/reference/html/core.html#spring-core</a></span></span></p></div><blockquote id="https://www.notion.so/8b827a5af3f14337ba31a4c9fba8ee4a" class="ColorfulBlock ColorfulBlock--ColorDefault Quote"><span class="SemanticStringArray"><span class="SemanticString">The Spring team generally advocates constructor injection, as it lets you implement application components as immutable objects and ensures that required dependencies are not null. Furthermore, constructor-injected components are always returned to the client (calling) code in a fully initialized state. As a side note, a large number of constructor arguments is a bad code smell, implying that the class likely has too many responsibilities and should</span></span></blockquote><div id="https://www.notion.so/1794e906c5f04ab683cb8a02601be3db" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">技术角度上说，依赖注入可以有field注入，setter注入方式和构造函数注入方式。技术角度上来说，构造函数的优势在于保证反悔的bean是完整的，且bean中依赖的其他类不为空。</span></span></p></div><div id="https://www.notion.so/a0e88eb47f264524868a8e144f3ef60a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">然而在实际生产过程中，spring官方给的技术优势大部分开发并不关注，还是直接写一个域然后标一个autowired。</span></span></p></div><div id="https://www.notion.so/c359f5336d714516ac201c60f3a4ed4b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">滥用依赖注入，导致一个bean中能注入十几个几十个bean，</span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">把依赖注入当作import导入来使用</strong></em></span><span class="SemanticString">，这样长久下去的代价就是代码不可维护，冗长以及</span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">不可测试！</strong></em></span><span class="SemanticString">。</span></span></p></div><div id="https://www.notion.so/4c62027867654ff0b9b92b15c8545819" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">一个没有显示构造函数却有大量域的类，如何测试？仅仅是想测试其中的一小部分内容，就得手动注入或者mock十几个bean，哪怕控制这些bean为null，还是需要对多达十几个外部依赖进行管理，光是理解潘清哪些依赖不会被使用就已经很麻烦了。</span></span></p></div><div id="https://www.notion.so/186da1132fd3459c9b66a994b7a3bd01" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">依赖注入本身是用来进行接耦合的好思想，却被滥用导致项目强耦合。所以，</span><span class="SemanticString"><em class="SemanticString__Fragment SemanticString__Fragment--Italic"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">必须使用构造函数进行自动注入</strong></em></span><span class="SemanticString">。不可能有一个类必须在构造函数中放十几个参数才能构造，那一定是设计出了问题。</span></span></p></div><div id="https://www.notion.so/983d9c87dc1a47b394d26fe7c5636fc4" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></article>
+  <div class="comment">
+    <div id="cusdis_thread"
+    data-host="https://cusdis.com"
+    data-app-id="96ca3fa6-7d19-4a76-a230-d9c37c8c46b3"
+    data-page-id="0526d2c3a89147058fa7ffaad58f89b2"
+    data-page-url="spring-0526d2.html"
+    data-page-title="使用Spring自动注入时必须使用构造函数注入方式！"
+    </div>
+    <script async defer src="https://cusdis.com/js/cusdis.es.js"></script>
+  </div>
+  <footer class="Footer">
+  <div>&copy; DragonChuBlog 2022</div>
+  <div>&centerdot;</div>
+  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
+      rel="noopener noreferrer">Notablog</a>.
+  </div>
+</footer>
+</body>
+
+</html>
