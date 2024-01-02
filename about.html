@@ -1,247 +1,206 @@
-<!DOCTYPE html>
-<html lang="en">
-
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-  <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<!-- iOS Safari -->
-<meta name="apple-mobile-web-app-capable" content="yes">
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<!-- Chrome, Firefox OS and Opera Status Bar Color -->
-<meta name="theme-color" content="#FFFFFF">
-<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.11.1/katex.min.css">
-<link rel="stylesheet" type="text/css"
-  href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.19.0/themes/prism.min.css">
-<link rel="stylesheet" type="text/css" href="css/SourceSansPro.css">
-<link rel="stylesheet" type="text/css" href="css/theme.css">
-<link rel="stylesheet" type="text/css" href="css/notablog.css">
-<!-- Favicon -->
-
-  <link rel="shortcut icon" href="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;">
-
+<!-- 2024-01-02 二 23:16 -->
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>&lrm;</title>
+<meta name="author" content="储惠龙" />
+<meta name="generator" content="Org Mode" />
 <style>
-  :root {
-    font-size: 20px;
+  #content { max-width: 60em; margin: auto; }
+  .title  { text-align: center;
+             margin-bottom: .2em; }
+  .subtitle { text-align: center;
+              font-size: medium;
+              font-weight: bold;
+              margin-top:0; }
+  .todo   { font-family: monospace; color: red; }
+  .done   { font-family: monospace; color: green; }
+  .priority { font-family: monospace; color: orange; }
+  .tag    { background-color: #eee; font-family: monospace;
+            padding: 2px; font-size: 80%; font-weight: normal; }
+  .timestamp { color: #bebebe; }
+  .timestamp-kwd { color: #5f9ea0; }
+  .org-right  { margin-left: auto; margin-right: 0px;  text-align: right; }
+  .org-left   { margin-left: 0px;  margin-right: auto; text-align: left; }
+  .org-center { margin-left: auto; margin-right: auto; text-align: center; }
+  .underline { text-decoration: underline; }
+  #postamble p, #preamble p { font-size: 90%; margin: .2em; }
+  p.verse { margin-left: 3%; }
+  pre {
+    border: 1px solid #e6e6e6;
+    border-radius: 3px;
+    background-color: #f2f2f2;
+    padding: 8pt;
+    font-family: monospace;
+    overflow: auto;
+    margin: 1.2em;
   }
+  pre.src {
+    position: relative;
+    overflow: auto;
+  }
+  pre.src:before {
+    display: none;
+    position: absolute;
+    top: -8px;
+    right: 12px;
+    padding: 3px;
+    color: #555;
+    background-color: #f2f2f299;
+  }
+  pre.src:hover:before { display: inline; margin-top: 14px;}
+  /* Languages per Org manual */
+  pre.src-asymptote:before { content: 'Asymptote'; }
+  pre.src-awk:before { content: 'Awk'; }
+  pre.src-authinfo::before { content: 'Authinfo'; }
+  pre.src-C:before { content: 'C'; }
+  /* pre.src-C++ doesn't work in CSS */
+  pre.src-clojure:before { content: 'Clojure'; }
+  pre.src-css:before { content: 'CSS'; }
+  pre.src-D:before { content: 'D'; }
+  pre.src-ditaa:before { content: 'ditaa'; }
+  pre.src-dot:before { content: 'Graphviz'; }
+  pre.src-calc:before { content: 'Emacs Calc'; }
+  pre.src-emacs-lisp:before { content: 'Emacs Lisp'; }
+  pre.src-fortran:before { content: 'Fortran'; }
+  pre.src-gnuplot:before { content: 'gnuplot'; }
+  pre.src-haskell:before { content: 'Haskell'; }
+  pre.src-hledger:before { content: 'hledger'; }
+  pre.src-java:before { content: 'Java'; }
+  pre.src-js:before { content: 'Javascript'; }
+  pre.src-latex:before { content: 'LaTeX'; }
+  pre.src-ledger:before { content: 'Ledger'; }
+  pre.src-lisp:before { content: 'Lisp'; }
+  pre.src-lilypond:before { content: 'Lilypond'; }
+  pre.src-lua:before { content: 'Lua'; }
+  pre.src-matlab:before { content: 'MATLAB'; }
+  pre.src-mscgen:before { content: 'Mscgen'; }
+  pre.src-ocaml:before { content: 'Objective Caml'; }
+  pre.src-octave:before { content: 'Octave'; }
+  pre.src-org:before { content: 'Org mode'; }
+  pre.src-oz:before { content: 'OZ'; }
+  pre.src-plantuml:before { content: 'Plantuml'; }
+  pre.src-processing:before { content: 'Processing.js'; }
+  pre.src-python:before { content: 'Python'; }
+  pre.src-R:before { content: 'R'; }
+  pre.src-ruby:before { content: 'Ruby'; }
+  pre.src-sass:before { content: 'Sass'; }
+  pre.src-scheme:before { content: 'Scheme'; }
+  pre.src-screen:before { content: 'Gnu Screen'; }
+  pre.src-sed:before { content: 'Sed'; }
+  pre.src-sh:before { content: 'shell'; }
+  pre.src-sql:before { content: 'SQL'; }
+  pre.src-sqlite:before { content: 'SQLite'; }
+  /* additional languages in org.el's org-babel-load-languages alist */
+  pre.src-forth:before { content: 'Forth'; }
+  pre.src-io:before { content: 'IO'; }
+  pre.src-J:before { content: 'J'; }
+  pre.src-makefile:before { content: 'Makefile'; }
+  pre.src-maxima:before { content: 'Maxima'; }
+  pre.src-perl:before { content: 'Perl'; }
+  pre.src-picolisp:before { content: 'Pico Lisp'; }
+  pre.src-scala:before { content: 'Scala'; }
+  pre.src-shell:before { content: 'Shell Script'; }
+  pre.src-ebnf2ps:before { content: 'ebfn2ps'; }
+  /* additional language identifiers per "defun org-babel-execute"
+       in ob-*.el */
+  pre.src-cpp:before  { content: 'C++'; }
+  pre.src-abc:before  { content: 'ABC'; }
+  pre.src-coq:before  { content: 'Coq'; }
+  pre.src-groovy:before  { content: 'Groovy'; }
+  /* additional language identifiers from org-babel-shell-names in
+     ob-shell.el: ob-shell is the only babel language using a lambda to put
+     the execution function name together. */
+  pre.src-bash:before  { content: 'bash'; }
+  pre.src-csh:before  { content: 'csh'; }
+  pre.src-ash:before  { content: 'ash'; }
+  pre.src-dash:before  { content: 'dash'; }
+  pre.src-ksh:before  { content: 'ksh'; }
+  pre.src-mksh:before  { content: 'mksh'; }
+  pre.src-posh:before  { content: 'posh'; }
+  /* Additional Emacs modes also supported by the LaTeX listings package */
+  pre.src-ada:before { content: 'Ada'; }
+  pre.src-asm:before { content: 'Assembler'; }
+  pre.src-caml:before { content: 'Caml'; }
+  pre.src-delphi:before { content: 'Delphi'; }
+  pre.src-html:before { content: 'HTML'; }
+  pre.src-idl:before { content: 'IDL'; }
+  pre.src-mercury:before { content: 'Mercury'; }
+  pre.src-metapost:before { content: 'MetaPost'; }
+  pre.src-modula-2:before { content: 'Modula-2'; }
+  pre.src-pascal:before { content: 'Pascal'; }
+  pre.src-ps:before { content: 'PostScript'; }
+  pre.src-prolog:before { content: 'Prolog'; }
+  pre.src-simula:before { content: 'Simula'; }
+  pre.src-tcl:before { content: 'tcl'; }
+  pre.src-tex:before { content: 'TeX'; }
+  pre.src-plain-tex:before { content: 'Plain TeX'; }
+  pre.src-verilog:before { content: 'Verilog'; }
+  pre.src-vhdl:before { content: 'VHDL'; }
+  pre.src-xml:before { content: 'XML'; }
+  pre.src-nxml:before { content: 'XML'; }
+  /* add a generic configuration mode; LaTeX export needs an additional
+     (add-to-list 'org-latex-listings-langs '(conf " ")) in .emacs */
+  pre.src-conf:before { content: 'Configuration File'; }
+
+  table { border-collapse:collapse; }
+  caption.t-above { caption-side: top; }
+  caption.t-bottom { caption-side: bottom; }
+  td, th { vertical-align:top;  }
+  th.org-right  { text-align: center;  }
+  th.org-left   { text-align: center;   }
+  th.org-center { text-align: center; }
+  td.org-right  { text-align: right;  }
+  td.org-left   { text-align: left;   }
+  td.org-center { text-align: center; }
+  dt { font-weight: bold; }
+  .footpara { display: inline; }
+  .footdef  { margin-bottom: 1em; }
+  .figure { padding: 1em; }
+  .figure p { text-align: center; }
+  .equation-container {
+    display: table;
+    text-align: center;
+    width: 100%;
+  }
+  .equation {
+    vertical-align: middle;
+  }
+  .equation-label {
+    display: table-cell;
+    text-align: right;
+    vertical-align: middle;
+  }
+  .inlinetask {
+    padding: 10px;
+    border: 2px solid gray;
+    margin: 10px;
+    background: #ffffcc;
+  }
+  #org-div-home-and-up
+   { text-align: right; font-size: 70%; white-space: nowrap; }
+  textarea { overflow-x: auto; }
+  .linenr { font-size: smaller }
+  .code-highlighted { background-color: #ffff00; }
+  .org-info-js_info-navigation { border-style: none; }
+  #org-info-js_console-label
+    { font-size: 10px; font-weight: bold; white-space: nowrap; }
+  .org-info-js_search-highlight
+    { background-color: #ffff00; color: #000000; font-weight: bold; }
+  .org-svg { }
 </style>
-  <title>简历&nbsp;|&nbsp;DragonChuBlog</title>
-  <meta property="og:type" content="blog">
-  <meta property="og:title" content="简历">
-  
-  
-    <meta property="og:image" content="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🧑‍💼&lt;/text&gt;&lt;/svg&gt;">
-  
-  <style>
-    .DateTagBar {
-      margin-top: 1.0rem;
-    }
-  </style>
 </head>
-
 <body>
-  <nav class="Navbar">
-  <a href="index.html">
-    <div class="Navbar__Btn">
-      
-        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🤠&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
-      
-      <span>首页</span>
-    </div>
-  </a>
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-  
-    
-      <span class="Navbar__Delim">&centerdot;</span>
-      <a href="about.html">
-        <div class="Navbar__Btn">
-          
-            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🧑‍💼&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
-          
-          <span>简历</span>
-        </div>
-      </a>
-    
-  
-    
-      <span class="Navbar__Delim">&centerdot;</span>
-      <a href="todo.html">
-        <div class="Navbar__Btn">
-          
-            <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;📌&lt;/text&gt;&lt;/svg&gt;"></span>&nbsp;
-          
-          <span>清单</span>
-        </div>
-      </a>
-    
-  
-</nav>
-  <header class="Header">
-    
-    <div class="Header__Spacer Header__Spacer--NoCover">
-    </div>
-    
-      <div class="Header__Icon">
-        <span><img class="inline-img-icon" src="data:image/svg+xml,&lt;svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22&gt;&lt;text text-anchor=%22middle%22 dominant-baseline=%22middle%22 x=%2250%22 y=%2255%22 font-size=%2280%22&gt;🧑‍💼&lt;/text&gt;&lt;/svg&gt;"></span>
-      </div>
-    
-    <h1 class="Header__Title">简历</h1>
-    
-  </header>
-  <article id="https://www.notion.so/18526eb42b5e4f5ba6358a529b13d808" class="PageRoot"><div id="https://www.notion.so/7dffd6b9360b4ec08055106959c8efbc" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/323bfebe209d4be79aae1b634bb1a8df" class="ColumnList"><div id="https://www.notion.so/db9a0ca911054709993b9d245a8290f2" class="Column" style="width:calc((100% - var(--column-spacing) * 1) * 1)"><h1 id="https://www.notion.so/6b6b67c496814c6eaacb005110c68e04" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--1"><a class="Anchor" href="#https://www.notion.so/6b6b67c496814c6eaacb005110c68e04"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString">求职状态: 有意向</span></span></h1></div><div id="https://www.notion.so/f2850eedb34744f59532fc52bb1af9a5" class="Column" style="width:calc((100% - var(--column-spacing) * 1) * 1)"><div id="https://www.notion.so/01c395f0843343bf8652956be679bb2e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></div></div><div id="https://www.notion.so/8a9b2d745d0447d39761a7b39a9ae909" class="ColumnList"><div id="https://www.notion.so/babf0422f0904efe9c26917b9d6fd056" class="Column" style="width:calc((100% - var(--column-spacing) * 2) * 0.29166666666666663)"><div id="https://www.notion.so/c203ee9826c24e31b69518b3db038f5f" class="ColorfulBlock ColorfulBlock--ColorDefault Callout"><div class="Callout__Icon"><div class="Icon">💼</div></div><p class="Callout__Content"><span class="SemanticStringArray"><span class="SemanticString">后端开发工程师</span></span></p></div></div><div id="https://www.notion.so/b120001b70d646149e8baafb508a956a" class="Column" style="width:calc((100% - var(--column-spacing) * 2) * 0.375)"><div id="https://www.notion.so/e7f67da1678745ff90086a89a7f4e814" class="ColorfulBlock ColorfulBlock--ColorDefault Callout"><div class="Callout__Icon"><div class="Icon">📭</div></div><p class="Callout__Content"><span class="SemanticStringArray"><span class="SemanticString">Mail: huilong.chu@foxmail.com</span></span></p></div></div><div id="https://www.notion.so/3815a764136a4f6783337ee1dd8642c6" class="Column" style="width:calc((100% - var(--column-spacing) * 2) * 0.333333333333333)"><div id="https://www.notion.so/5b01a387e132408582c2e59d52dfc204" class="ColorfulBlock ColorfulBlock--ColorDefault Callout"><div class="Callout__Icon"><img class="Icon" style="width:1.5em;height:1.5em" src="https://www.notion.so/signed/https%3A%2F%2Fs3-us-west-2.amazonaws.com%2Fsecure.notion-static.com%2Ff72b4a81-525e-42c0-9e4c-d81cad0b9910%2Fgithub-mark.png?table=block&amp;id=5b01a387-e132-4085-82c2-e59d52dfc204"/></div><p class="Callout__Content"><span class="SemanticStringArray"><span class="SemanticString"><a class="SemanticString__Fragment SemanticString__Fragment--Link" href="https://github.com/Dragonchu">https://github.com/Dragonchu</a></span></span></p></div></div></div><div id="https://www.notion.so/02dc94dccd724a7fade179f82e4e2812" class="ColumnList"><div id="https://www.notion.so/c86ce4180a844abe9aac8dc98d3e32e7" class="Column" style="width:calc((100% - var(--column-spacing) * 1) * 0.5)"><h3 id="https://www.notion.so/53d47a5e7bc3490e981d86fce67da058" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/53d47a5e7bc3490e981d86fce67da058"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorBlue">工作经历</mark></span></span></h3><div id="https://www.notion.so/5774b7b391814415a48cf5fd2fa44c7e" class="Divider"></div><div id="https://www.notion.so/413a9a1a6e0446b6878c7a476e0b3fe5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/55aabcb25ebd4c3db366789c44510d50" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">快手</strong></span><span class="SemanticString"> • 中国，北京</span></span></p></div><div id="https://www.notion.so/8777b5682eef44e98944ff521f9a47e8" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/55902a034b7a48819daca6f6e510eecc" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">Java后端开发实习生</mark></span></span></p></div><div id="https://www.notion.so/36b47255d9a148ee93ee8691fd062738" class="ColorfulBlock ColorfulBlock--ColorGray Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">2021-05 - 2021-08</span></span></p></div><div id="https://www.notion.so/926d9b652a74412bb814febade8a5a52" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">主要从事Java后端开发，参与到弹性微服务平台的开发中。</span></span></p></div><div id="https://www.notion.so/9aa8e1b789e3495daa5b76b81be6dbe4" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">学习到了Java后端开发流程，git协作规范，各种自动化流程，</span></span></p></div><div id="https://www.notion.so/02f791f1ccc344b198fe1589c56bf198" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">以及软件架构与设计的经验。</span></span></p></div><div id="https://www.notion.so/615e0e73f68f402f84938840d1eaffa0" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">熟悉了现代化软件工程的开发。</span></span></p></div><div id="https://www.notion.so/d716a1d54b77443bb0f26b58f21881c6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/92169db1b16d4c889d93bc625861890e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/8999c4014287489bb24684c5d23020c7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">京东科技 </strong></span><span class="SemanticString">• 中国，北京</span></span></p></div><div id="https://www.notion.so/6354129fe65e4a90b69051330984f718" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/cc91f9e1520a448ba4b3c5850cec9bd5" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">图平台技术部</mark></span></span></p></div><div id="https://www.notion.so/67b70711b3374f2d8c4a1a7e69a30825" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">后端开发工程师</mark></span></span></p></div><div id="https://www.notion.so/d7c47b33653941f29b2d6e47fbbc17d6" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">2022-07-26 - 2023-04-30</mark></span></span></p></div><div id="https://www.notion.so/ab4b31eae0d945a0b897aa4bf8e6ff46" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">基于Nebula实现通用知识图谱平台。</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/ac4dfe63d21745a080b0675f8c92ad36" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">GraphQuery</span></span></li></ul><div id="https://www.notion.so/218c8b777ec94b5c9c3ca9a19976ec3e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">封装了图查询的Java服务，多图管理，Session强化，查询分析与优化，TP/AP结合。</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/9e3e0c84a2f140d8a763a4d17735f459" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">GraphImport</span></span></li></ul><div id="https://www.notion.so/f3675fc00093419a9e47854f71b55eed" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">数据导入，自动重试，多机制。</span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/017362fd480a49db97614564eeb3ad6d" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">图谱定制开发</span></span></li></ul><div id="https://www.notion.so/9f22865a8ce740baa5027483aa2f85c1" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">风险报警，保证Mysql与Nebula一致性。</span></span></p></div><div id="https://www.notion.so/d2f0e672b9d94eebad0f1a9b7583d8bd" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/f664b39d9ecc4943995288f6bfbd6121" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">实名与反欺诈研发部</mark></span></span></p></div><div id="https://www.notion.so/5c9454fd832042d59148b0e75992f279" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">后端开发工程师</mark></span></span></p></div><div id="https://www.notion.so/2d7781a92a94425d8a7d6b54e9c50b9e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">2023-05-01 - 至今</mark></span></span></p></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/4d7bf0a8197e465ab97b9c4ecc8df7b7" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">完成京东主站个人实名认证服务后端日常功能开发（支持新版永久居留证，百万商家自然人项目等重点项目）</span></span></li><li id="https://www.notion.so/d5a9ce41aa354bf0946902164f647bbe" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">618，双十一维护个人实名服务稳定（黄金流量链路核心接口tps 20万）</span></span></li><li id="https://www.notion.so/872c98ccb1a94c3887832a0987f7590e" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">对个人实名服务体埋点监控升级</span></span></li><li id="https://www.notion.so/e7c10d280d0d4e5b8b23a131315c2294" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">对个人实名服务体系用户证件照数据以及刷脸实名数据对象存储数据(6亿+数据量, 150TB+数据)的迁移</span></span></li></ul><div id="https://www.notion.so/c29a4167aa9d4d458018bdbf278f571c" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></div><div id="https://www.notion.so/4aad9f18cd7345269bd07eb94bd239ce" class="Column" style="width:calc((100% - var(--column-spacing) * 1) * 0.5)"><h3 id="https://www.notion.so/1b6013f31f8f4e2285f9a0a564e10ff5" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/1b6013f31f8f4e2285f9a0a564e10ff5"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorBlue">专业技能</mark></span></span></h3><div id="https://www.notion.so/f0dabdba7a344870a0f751de29776ec0" class="Divider"></div><div id="https://www.notion.so/ea27d71286b44744bd89cbb45d42f48e" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/04d6fd02cd374c16836059d2221b2192" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">语言：</strong></span></span></p></div><div id="https://www.notion.so/b48766b0122744d99d4346d8f5dbd44f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Java： [入门，1/3*登堂)</span></span></p></div><div id="https://www.notion.so/48a7b04032ec4d6b9ee3ec28e0843457" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Scala： [0，2/3*入门)</span></span></p></div><div id="https://www.notion.so/ea8ff71ace674ccc94bbf3b7c857df9d" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">Python： （会用）</span></span></p></div><div id="https://www.notion.so/302476c4725e41208ac4d7768ff15139" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">RUST：学习中</span></span></p></div><div id="https://www.notion.so/ca258cfa894c4cc0a47808d4c9b54f0f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">其他：（都能学）</span></span></p></div><div id="https://www.notion.so/0bf3054df24d4b96b5423d4fb97af59b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/876ef46a0a44477694632fd30269928b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">大数据：</strong></span></span></p></div><div id="https://www.notion.so/c01ae6fb29e64f6d9f1eb64d7f1cca32" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">spark：写过运行亿级别数据量的程序，会debug</span></span></p></div><div id="https://www.notion.so/24b6807f147d4ad5a315d24efca598e7" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">hadoop：读完mr论文</span></span></p></div><div id="https://www.notion.so/61a5b8422cef43b18ad913198cfe1580" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">hive：会用</span></span></p></div><div id="https://www.notion.so/17e14bfce5624f76985a872438cfde27" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/fcbb081fddf049cda2d16a7c63d275bf" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">图数据库</strong></span><span class="SemanticString">：</span></span></p></div><div id="https://www.notion.so/31b1e61d4c114cde916520e57f0b6017" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">nebula：[入门，1/2*登堂]</span></span></p></div><div id="https://www.notion.so/f6dfda13b38f4566b91c4eda6244ada2" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/d01091478c6740ecac44e761e25b3b6c" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/d01091478c6740ecac44e761e25b3b6c"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorBlue">教育经历</mark></span></span></h3><div id="https://www.notion.so/7efd3346091c43e49d8b29982229d7ea" class="Divider"></div><div id="https://www.notion.so/949cf576abdb4b67a522eca4c5aef772" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/d270af3f857242eba8d7f46c7490539a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">中南大学</strong></span></span></p></div><div id="https://www.notion.so/017c66ddd5d34ac3ad93db0152122556" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">计算机科学与技术</span></span></p></div><div id="https://www.notion.so/13d901e68dd44d28a2ce8c570e614249" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorGray">2018-06 - 2022-06</mark></span></span></p></div><div id="https://www.notion.so/3b77ec6f641b4dc599dbec3e6187fb9f" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/b6a35134c9d745fcb9e892df40544873" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString"><strong class="SemanticString__Fragment SemanticString__Fragment--Bold">主修课程</strong></span></span></p></div><div id="https://www.notion.so/d9671c69bb564b18b6fa6ca5589c280a" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"><span class="SemanticString">编译原理，计算机体系结构，算法，数据结构，汇编等</span></span></p></div><div id="https://www.notion.so/ce491ed8a646450f8eb42d079d20752b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><div id="https://www.notion.so/9bfb5e02b8d94b1290b5d1c836ab6708" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div><h3 id="https://www.notion.so/1c0dfaf223e04c4a9e2af96425b3c4d8" class="ColorfulBlock ColorfulBlock--ColorDefault Heading Heading--3"><a class="Anchor" href="#https://www.notion.so/1c0dfaf223e04c4a9e2af96425b3c4d8"><svg width="16" height="16" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path></svg></a><span class="SemanticStringArray"><span class="SemanticString"><mark class="SemanticString__Fragment SemanticString__Fragment--HighlightedColor SemanticString__Fragment--ColorBlue">其他</mark></span></span></h3><div id="https://www.notion.so/3017e0a124bf4a1aab04293f8502c396" class="Divider"></div><ul class="BulletedListWrapper"><li id="https://www.notion.so/d05650568b7b4638a2120c05d0f87450" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">英语过了六级</span></span></li><li id="https://www.notion.so/f8e6f29dc6e641ee804918bc65f560e8" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">大学期间担任话剧团团长，组织200+人</span></span></li><li id="https://www.notion.so/6eb07dca542f4976bc622bdaa5d141ea" class="BulletedList"><span class="SemanticStringArray"><span class="SemanticString">开源项目贡献者</span></span></li></ul><div id="https://www.notion.so/b13b768cdf78471cad2cc168b268be6b" class="ColorfulBlock ColorfulBlock--ColorDefault Text"><p class="Text__Content"><span class="SemanticStringArray"></span></p></div></div></div></article>
-  <footer class="Footer">
-  <div>&copy; DragonChuBlog 2022</div>
-  <div>&centerdot;</div>
-  <div>Powered by <a href="https://github.com/dragonman225/notablog" target="_blank"
-      rel="noopener noreferrer">Notablog</a>.
-  </div>
-</footer>
+<div id="content" class="content">
+</div>
+<div id="postamble" class="status">
+<p class="author">Author: 储惠龙</p>
+<p class="date">Created: 2024-01-02 二 23:16</p>
+<p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
+</div>
 </body>
-
 </html>
